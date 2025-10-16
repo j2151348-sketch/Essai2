@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test Pages Functions — Ohr Joseph</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:2rem;background:#0f172a;color:#e5e7eb}
+    .wrap{max-width:800px;margin:0 auto}
+    h1{font-size:2rem;margin:0 0 1rem}
+    section{background:#111827;border:1px solid #1f2937;border-radius:14px;padding:1rem 1.25rem;margin:1rem 0}
+    button, input[type="email"], input[type="password"]{
+      border-radius:12px; border:1px solid #374151; background:#0b1220; color:#e5e7eb; padding:.7rem 1rem; font-size:1rem
+    }
+    button{cursor:pointer}
+    .row{display:flex; gap:.75rem; flex-wrap:wrap}
+    .log{white-space:pre-wrap; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#0b1020; border-radius:12px; padding:.75rem; border:1px solid #1f2937}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Diagnostic Cloudflare Pages Functions</h1>
+    <p>Déploie ce zip. Si tout est OK, l’onglet <em>Functions</em> doit lister <code>/hello</code>, <code>/auth/login</code> et <code>/auth/register</code>.</p>
+
+    <section>
+      <h2>1) Ping</h2>
+      <div class="row">
+        <button id="ping">Appeler /hello</button>
+      </div>
+      <div class="log" id="pingLog">…</div>
+    </section>
+
+    <section>
+      <h2>2) Formulaire de connexion (démo)</h2>
+      <div class="row">
+        <input id="email" type="email" placeholder="email" />
+        <input id="pass" type="password" placeholder="mot de passe" />
+        <button id="login">Se connecter</button>
+      </div>
+      <div class="log" id="loginLog">…</div>
+    </section>
+  </div>
+
+  <script type="module" src="/assets/app.js"></script>
+</body>
+</html>
