@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>École Ohr Joseph</title>
+  <link rel="icon" href="https://i.imgur.com/5d0znzC.png" />
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--b:#1f2937;--tx:#e5e7eb;--muted:#9ca3af;--accent:#f4b400}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    header{background:linear-gradient(135deg,#1d4f91,#0d9488);padding:1rem 1.25rem}
+    header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+    nav a{color:#fff;text-decoration:none;padding:.5rem 1rem;border-radius:999px}
+    nav a:hover{background:rgba(255,255,255,.2)}
+    .wrap{max-width:1100px;margin:1.25rem auto;padding:0 1.25rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+    .card{background:var(--card);border:1px solid var(--b);border-radius:16px;padding:1rem}
+    h1{margin:.5rem 0 1rem} label{display:block;margin:.5rem 0 .25rem}
+    input,select,button{width:100%;padding:.75rem;border-radius:12px;border:1px solid var(--b);background:#0b1220;color:var(--tx)}
+    button{cursor:pointer;background:var(--accent);color:#1f2933;border:none;font-weight:600}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .log{margin-top:.5rem;color:var(--muted);font-size:.95rem;min-height:1.25rem}
+    .ok{color:#10b981}.err{color:#ef4444}
+    footer{color:var(--muted);padding:1.5rem;text-align:center}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <img src="https://i.imgur.com/5d0znzC.png" alt="Ohr Joseph" width="46" height="46" style="border-radius:10px;background:rgba(255,255,255,.15);padding:.25rem">
+      <strong>École Ohr Joseph</strong>
+    </div>
+    <nav>
+      <a href="/">Accueil</a>
+      <a href="/admin.html">Administration</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Excellence & Tradition</h1>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Connexion professeur / personnel</h2>
+      <div class="row">
+        <div>
+          <label>E-mail</label>
+          <input id="loginEmail" type="email" placeholder="vous@example.com" autocomplete="username">
+        </div>
+        <div>
+          <label>Mot de passe</label>
+          <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+      </div>
+      <button id="btnLogin">Se connecter</button>
+      <div class="log" id="loginLog"></div>
+    </section>
+
+    <section class="card">
+      <h2>Créer un compte (validation admin requise)</h2>
+      <div class="row">
+        <div><label>Nom</label><input id="regSurname" type="text" placeholder="Nom"></div>
+        <div><label>Prénom</label><input id="regName" type="text" placeholder="Prénom"></div>
+      </div>
+      <div class="row">
+        <div><label>Rôle</label>
+          <select id="regRole"><option value="prof">Professeur</option><option value="personnel">Personnel</option></select>
+        </div>
+        <div><label>Classe (si prof)</label><input id="regClasse" type="text" placeholder="6e A"></div>
+      </div>
+      <div class="row">
+        <div><label>E-mail</label><input id="regEmail" type="email" placeholder="vous@example.com" autocomplete="new-username"></div>
+        <div><label>Mot de passe</label><input id="regPass" type="password" placeholder="••••••••" autocomplete="new-password"></div>
+      </div>
+      <button id="btnRegister">Demander la création</button>
+      <div class="log" id="regLog"></div>
+    </section>
+  </div>
+</main>
+
+<footer>© 2025 École Ohr Joseph</footer>
+<script type="module" src="/assets/app.js"></script>
+</body>
+</html>
