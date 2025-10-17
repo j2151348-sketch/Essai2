@@ -161,87 +161,88 @@
   <footer>
     <p>© 2025 École Ohr Joseph — <a class="link" href="/admin.html">Espace Administration</a></p>
   </footer>
+<script type="module">
+  // Endpoints (garde-les si tes routes sont identiques)
+  const LOGIN_URL    = '/auth/login';
+  const REGISTER_URL = '/auth/register';
 
-  <script type="module">
-    // --- Configuration des endpoints (change-les si besoin) ---
-    const LOGIN_URL    = '/auth/login';
-    const REGISTER_URL = '/auth/register';
-
-    // Utilitaire affichage messages
-    function show(el, msg, ok=false){
-      el.textContent = msg;
-      el.className = 'msg small ' + (ok ? 'ok' : 'err');
-    }
-    async function postJSON(url, data){
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(data)
-      });
-      let json = null;
-      try { json = await res.json(); } catch(e){}
-      return { ok: res.ok, status: res.status, data: json };
-    }
-
-    // --- Connexion ---
-    const loginBtn = document.getElementById('loginBtn');
-    const loginMsg = document.getElementById('loginMsg');
-    loginBtn.addEventListener('click', async () => {
-      const email = document.getElementById('loginEmail').value.trim();
-      const pass  = document.getElementById('loginPass').value;
-      if(!email || !pass){ show(loginMsg,'Veuillez remplir les champs.'); return; }
-      loginBtn.disabled = true; show(loginMsg,'Connexion en cours…');
-      const res = await postJSON(LOGIN_URL, { email, pass });
-      loginBtn.disabled = false;
-
-      if(res.ok){
-        show(loginMsg, res?.data?.message || 'Connecté !', true);
-        // Redirige vers le tableau de bord (à créer /admin.html)
-        setTimeout(()=> location.href='/admin.html', 600);
-      } else {
-        const msg = res?.data?.error || res?.data?.message || `Erreur ${res.status}`;
-        show(loginMsg, msg);
-      }
+  function show(el, msg, ok=false){
+    el.textContent = msg;
+    el.className = 'msg small ' + (ok ? 'ok' : 'err');
+  }
+  async function postJSON(url, data){
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(data)
     });
+    let json = null;
+    try { json = await res.json(); } catch(e){}
+    return { ok: res.ok, status: res.status, data: json };
+  }
 
-    // --- Création de compte ---
-    const registerBtn = document.getElementById('registerBtn');
-    const registerMsg = document.getElementById('registerMsg');
-    registerBtn.addEventListener('click', async () => {
-      const payload = {
-        name:    document.getElementById('rName').value.trim(),
-        surname: document.getElementById('rSurname').value.trim(),
-        role:    document.getElementById('rRole').value,
-        classe:  document.getElementById('rClasse').value.trim(),
-        email:   document.getElementById('rEmail').value.trim(),
-        pass:    document.getElementById('rPass').value
-      };
-      if(!payload.name || !payload.surname || !payload.email || !payload.pass){
-        show(registerMsg,'Veuillez compléter tous les champs requis.'); return;
-      }
-      registerBtn.disabled = true; show(registerMsg,'Envoi de la demande…');
+  // --- Connexion ---
+  const loginBtn = document.getElementById('loginBtn');
+  const loginMsg = document.getElementById('loginMsg');
+  loginBtn.addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password  = document.getElementById('loginPass').value; // <-- password
+    if(!email || !password){ show(loginMsg,'Veuillez remplir les champs.'); return; }
+    loginBtn.disabled = true; show(loginMsg,'Connexion en cours…');
 
-      const res = await postJSON(REGISTER_URL, payload);
-      registerBtn.disabled = false;
+    // IMPORTANT: le serveur attend { email, password }
+    const res = await postJSON(LOGIN_URL, { email, password });
+    loginBtn.disabled = false;
 
-      if(res.ok){
-        show(registerMsg, res?.data?.message || 'Demande envoyée. Vérifiez vos e-mails.', true);
-      } else {
-        const msg = res?.data?.error || res?.data?.message || `Erreur ${res.status}`;
-        show(registerMsg, msg);
-      }
+    if(res.ok){
+      show(loginMsg, res?.data?.message || 'Connecté !', true);
+      setTimeout(()=> location.href='/admin.html', 600);
+    } else {
+      const msg = res?.data?.error || res?.data?.message || `Erreur ${res.status}`;
+      show(loginMsg, msg);
+    }
+  });
+
+  // --- Création de compte ---
+  const registerBtn = document.getElementById('registerBtn');
+  const registerMsg = document.getElementById('registerMsg');
+  registerBtn.addEventListener('click', async () => {
+    const payload = {
+      name:    document.getElementById('rName').value.trim(),
+      surname: document.getElementById('rSurname').value.trim(),
+      role:    document.getElementById('rRole').value,
+      classe:  document.getElementById('rClasse').value.trim(),
+      email:   document.getElementById('rEmail').value.trim(),
+      password:document.getElementById('rPass').value        // <-- password
+    };
+    if(!payload.name || !payload.surname || !payload.email || !payload.password){
+      show(registerMsg,'Veuillez compléter tous les champs requis.'); return;
+    }
+    registerBtn.disabled = true; show(registerMsg,'Envoi de la demande…');
+
+    // IMPORTANT: le serveur attend { name, surname, role, classe, email, password }
+    const res = await postJSON(REGISTER_URL, payload);
+    registerBtn.disabled = false;
+
+    if(res.ok){
+      show(registerMsg, res?.data?.message || 'Demande envoyée. Vérifiez vos e-mails.', true);
+    } else {
+      const msg = res?.data?.error || res?.data?.message || `Erreur ${res.status}`;
+      show(registerMsg, msg);
+    }
+  });
+
+  // Accessibilité: Enter pour valider
+  for (const id of ['loginEmail','loginPass']) {
+    document.getElementById(id).addEventListener('keydown', (e)=>{
+      if(e.key==='Enter') loginBtn.click();
     });
+  }
+  for (const id of ['rName','rSurname','rClasse','rEmail','rPass']) {
+    const el = document.getElementById(id);
+    el && el.addEventListener('keydown',(e)=>{ if(e.key==='Enter') registerBtn.click(); });
+  }
+</script>
 
-    // Accessibilité: Enter pour valider
-    for (const id of ['loginEmail','loginPass']) {
-      document.getElementById(id).addEventListener('keydown', (e)=>{
-        if(e.key==='Enter') loginBtn.click();
-      });
-    }
-    for (const id of ['rName','rSurname','rClasse','rEmail','rPass']) {
-      const el = document.getElementById(id);
-      el && el.addEventListener('keydown',(e)=>{ if(e.key==='Enter') registerBtn.click(); });
-    }
-  </script>
 </body>
 </html>
