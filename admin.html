@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Administration — École Ohr Joseph</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--b:#1f2937;--tx:#e5e7eb;--muted:#9ca3af;--accent:#f4b400}
+    body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    .wrap{max-width:1100px;margin:1.25rem auto;padding:0 1.25rem}
+    header{padding:1rem 1.25rem;background:linear-gradient(135deg,#1d4f91,#0d9488);color:#fff}
+    .card{background:#111827;border:1px solid var(--b);border-radius:16px;padding:1rem}
+    input,button{padding:.6rem .8rem;border-radius:10px;border:1px solid var(--b);background:#0b1220;color:var(--tx)}
+    button{background:var(--accent);color:#1f2933;border:none;font-weight:600;cursor:pointer}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:.6rem;border-bottom:1px solid var(--b);text-align:left}
+    .row{display:flex;gap:.5rem;align-items:center;margin:.5rem 0}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+<header><div class="wrap"><strong>Administration</strong></div></header>
+<main class="wrap">
+  <section class="card">
+    <h2>Validation des comptes</h2>
+    <div class="row">
+      <input id="adminKey" type="password" placeholder="Clé admin (ne s’affiche pas publiquement)">
+      <button id="btnLoad">Charger les comptes en attente</button>
+      <span id="loadLog" class="muted"></span>
+    </div>
+    <table>
+      <thead><tr><th>Nom</th><th>E-mail</th><th>Rôle</th><th>Classe</th><th>État</th><th>Action</th></tr></thead>
+      <tbody id="usersTbody"></tbody>
+    </table>
+  </section>
+</main>
+<script type="module">
+const tbody = document.querySelector('#usersTbody');
+const log = (m) => document.querySelector('#loadLog').textContent = m || '';
+
+async function fetchPending(){
+  log('Chargement…');
+  const key = document.querySelector('#adminKey').value.trim();
+  const res = await fetch('/admin/list?status=pending',{ headers:{'X-ADMIN-KEY': key }});
+  const data = await res.json();
+  log('');
+  if (!res.ok){ alert(data.error || 'Erreur'); return;}
+  tbody.innerHTML = '';
+  for (const u of data.users){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${u.surname} ${u.name}</td>
+      <td>${u.email}</td>
+      <td>${u.role}</td>
+      <td>${u.classe ?? ''}</td>
+      <td>${u.validated ? 'Validé' : 'En attente'}</td>
+      <td><button data-id="${u.id}">Valider</button></td>
+    `;
+    tr.querySelector('button').addEventListener('click', () => validate(u.id, true));
+    tbody.appendChild(tr);
+  }
+}
+async function validate(userId, validated){
+  const key = document.querySelector('#adminKey').value.trim();
+  const res = await fetch('/admin/validate', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-ADMIN-KEY': key},
+    body: JSON.stringify({ userId, validated })
+  });
+  const data = await res.json();
+  if (!res.ok){ alert(data.error || 'Erreur'); return;}
+  await fetchPending();
+}
+document.querySelector('#btnLoad').addEventListener('click', fetchPending);
+</script>
+</body>
+</html>
