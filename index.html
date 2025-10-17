@@ -3,246 +3,133 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>École Ohr Joseph — Espace personnel</title>
-  <meta name="description" content="Connexion professeur/personnel et création de compte pour le site de l’École Ohr Joseph." />
+  <title>École Ohr Joseph — Connexion & Inscriptions personnel</title>
+  <meta name="color-scheme" content="light dark">
   <style>
-    :root{
-      --bg:#0b1220;         /* fond sombre lisible */
-      --panel:#0f172a;      /* cartes */
-      --panel-2:#111827;
-      --text:#e5e7eb;       /* texte principal */
-      --muted:#9ca3af;      /* texte secondaire */
-      --accent:#fbbf24;     /* jaune des boutons */
-      --accent-2:#22d3ee;   /* azur pour liens */
-      --border:#1f2937;     /* bordures discrètes */
-      --danger:#ef4444;     /* rouge erreurs */
-      --success:#22c55e;    /* vert succès */
-      --radius:16px;
-      --shadow:0 6px 22px rgba(0,0,0,.25);
-    }
+    :root{--bg:#0b1020;--panel:#0f172a;--muted:#94a3b8;--text:#e5e7eb;--brand:#22c55e;--brand2:#f59e0b;--error:#ef4444;--ok:#10b981}
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;background:linear-gradient(180deg,#0b1220 0%,#0e1630 100%);
-      color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    }
-    header{
-      position:sticky;top:0;z-index:10;
-      background:linear-gradient(90deg,#124e66,#1aa3a3);
-      padding:14px 18px;box-shadow:var(--shadow);
-    }
-    .bar{max-width:1100px;margin:auto;display:flex;align-items:center;gap:18px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
-    .brand img{width:32px;height:32px;border-radius:8px}
-    nav{margin-left:auto;display:flex;gap:14px;flex-wrap:wrap}
-    nav a{color:#002b36;background:rgba(255,255,255,.9);text-decoration:none;padding:8px 12px;border-radius:999px;font-weight:600}
-    nav a:hover{background:#fff}
-
-    main{max-width:1100px;margin:28px auto;padding:0 16px}
-    .hero{margin:6px 0 22px}
-    .hero h1{font-size:clamp(26px,2.8vw,36px);margin:.2rem 0 .4rem}
-    .hero p{color:var(--muted);margin:0}
-
-    .grid{
-      display:grid;gap:18px;
-      grid-template-columns:repeat(12,1fr);
-    }
-    .card{
-      grid-column:span 12;
-      background:linear-gradient(180deg,var(--panel),var(--panel-2));
-      border:1px solid var(--border);border-radius:var(--radius);
-      box-shadow:var(--shadow);padding:18px;
-    }
-    @media (min-width:900px){
-      .card{grid-column:span 6}
-    }
-    .card h2{margin:.2rem 0 1rem}
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    label{display:block;font-size:.95rem;margin:.2rem 0 .35rem}
-    input,select{
-      width:100%;padding:.8rem 1rem;border-radius:12px;
-      border:1px solid var(--border);background:#0b1220;color:var(--text);
-      outline:none;
-    }
-    input:focus,select:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.2)}
-    .two{display:grid;gap:12px;grid-template-columns:1fr 1fr}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
-      padding:.9rem 1.1rem;border-radius:14px;border:1px solid #8b5d00;
-      background:linear-gradient(180deg,#fbbf24,#f59e0b);color:#19202a;
-      font-weight:700;cursor:pointer;width:100%;
-    }
-    .btn[disabled]{opacity:.6;cursor:not-allowed;filter:grayscale(20%)}
-    .msg{margin-top:.75rem;font-size:.95rem}
-    .msg.ok{color:var(--success)}
-    .msg.err{color:var(--danger)}
-    footer{max-width:1100px;margin:28px auto;padding:0 16px;color:var(--muted);text-align:center}
-    .link{color:var(--accent-2);text-decoration:none}
-    .link:hover{text-decoration:underline}
-    .small{font-size:.92rem;color:var(--muted)}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(135deg,#0b1220,#13233d);}
+    header{background:linear-gradient(90deg,#0e7490,#10b981);padding:14px 18px;color:#fff;position:sticky;top:0;z-index:10}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 16px;color:var(--text)}
+    h1{font-size:clamp(24px,3.2vw,36px);margin:0 0 6px}
+    p.lead{color:var(--muted);margin:0 0 22px}
+    nav a{display:inline-block;margin-right:10px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.15);color:#fff;text-decoration:none}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:rgba(15,23,42,.9);border:1px solid #1f2937;border-radius:16px;padding:18px}
+    .card h2{margin:0 0 8px}
+    label{display:block;margin:.6rem 0 .25rem}
+    input,select{width:100%;padding:.8rem 1rem;border-radius:12px;border:1px solid #374151;background:#0b1220;color:#e5e7eb}
+    button{cursor:pointer;border:0;border-radius:12px;padding:.85rem 1rem;font-weight:600}
+    .btn-primary{background:linear-gradient(180deg,#fbbf24,#f59e0b);color:#141414}
+    .row{display:flex;gap:.8rem;flex-wrap:wrap}
+    .help{font-size:.9rem;color:var(--muted)}
+    .msg{margin-top:.75rem;padding:.65rem .8rem;border-radius:10px}
+    .msg.err{background:#331518;color:#fecaca;border:1px solid #7f1d1d}
+    .msg.ok{background:#0d2320;color:#a7f3d0;border:1px solid #065f46}
+    .footer{margin-top:28px;color:#9ca3af;text-align:center}
+    a.link{color:#a7f3d0}
+    .admin-link{display:inline-block;margin-left:10px}
   </style>
 </head>
 <body>
   <header>
-    <div class="bar">
-      <div class="brand">
-        <img src="https://dummyimage.com/64x64/ffffff/000000&text=OJ" alt="Ohr Joseph">
-        <span>École Ohr Joseph</span>
-      </div>
-      <nav>
-        <a href="/">Accueil</a>
-        <a href="/admin.html">Administration</a>
+    <div class="wrap">
+      <strong>École Ohr Joseph</strong>
+      <nav class="admin-link">
+        <a href="#admin" id="gotoAdmin">Administration</a>
+        <a href="#" id="gotoHome">Accueil</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1>Excellence & Tradition</h1>
-      <p>Connexion du personnel et des professeurs. La création de compte nécessite la validation d’un administrateur.</p>
-    </section>
+  <main class="wrap" id="home">
+    <h1>Excellence & Tradition</h1>
+    <p class="lead">Connexion du personnel et des professeurs. La création de compte nécessite la validation d’un administrateur.</p>
 
     <div class="grid">
       <!-- Connexion -->
-      <article class="card" id="loginCard">
+      <section class="card">
         <h2>Connexion professeur / personnel</h2>
-        <div class="row two">
-          <div style="width:100%">
-            <label for="loginEmail">E-mail</label>
-            <input id="loginEmail" type="email" inputmode="email" autocomplete="email" required />
+        <form id="loginForm" autocomplete="off">
+          <label for="loginEmail">E-mail</label>
+          <input id="loginEmail" name="email" type="email" required placeholder="prenom.nom@ecole.fr" />
+
+          <label for="loginPassword">Mot de passe</label>
+          <!-- IMPORTANT : name="password" -->
+          <input id="loginPassword" name="password" type="password" required minlength="8" placeholder="********" />
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn-primary" type="submit">Se connecter</button>
           </div>
-          <div style="width:100%">
-            <label for="loginPass">Mot de passe</label>
-            <input id="loginPass" type="password" autocomplete="current-password" required />
-          </div>
-        </div>
-        <div class="row" style="margin-top:12px">
-          <button id="loginBtn" class="btn">Se connecter</button>
-        </div>
-        <div id="loginMsg" class="msg small"> </div>
-      </article>
+          <div id="loginMsg" class="msg" style="display:none"></div>
+        </form>
+      </section>
 
       <!-- Création -->
-      <article class="card" id="registerCard">
+      <section class="card">
         <h2>Créer un compte (validation admin requise)</h2>
-
-        <div class="row two">
-          <div><label for="rName">Nom</label><input id="rName" required /></div>
-          <div><label for="rSurname">Prénom</label><input id="rSurname" required /></div>
-        </div>
-
-        <div class="row two" style="margin-top:12px">
-          <div>
-            <label for="rRole">Rôle</label>
-            <select id="rRole" required>
-              <option value="personnel">Personnel</option>
-              <option value="prof">Professeur</option>
-            </select>
+        <form id="registerForm" autocomplete="off">
+          <div class="row" style="gap:10px">
+            <div style="flex:1">
+              <label for="regName">Nom</label>
+              <input id="regName" name="name" required />
+            </div>
+            <div style="flex:1">
+              <label for="regSurname">Prénom</label>
+              <input id="regSurname" name="surname" required />
+            </div>
           </div>
-          <div>
-            <label for="rClasse">Classe (si prof)</label>
-            <input id="rClasse" placeholder="ex : 6e A" />
+
+          <div class="row" style="gap:10px">
+            <div style="flex:1">
+              <label for="regRole">Rôle</label>
+              <select id="regRole" name="role" required>
+                <option value="personnel">Personnel</option>
+                <option value="prof">Professeur</option>
+              </select>
+            </div>
+            <div style="flex:1">
+              <label for="regClasse">Classe (si prof)</label>
+              <input id="regClasse" name="classe" placeholder="ex: 6e A" />
+            </div>
           </div>
-        </div>
 
-        <div class="row two" style="margin-top:12px">
-          <div><label for="rEmail">E-mail</label><input id="rEmail" type="email" inputmode="email" autocomplete="email" required /></div>
-          <div><label for="rPass">Mot de passe</label><input id="rPass" type="password" autocomplete="new-password" required /></div>
-        </div>
+          <label for="regEmail">E-mail</label>
+          <input id="regEmail" name="email" type="email" required placeholder="prenom.nom@ecole.fr" />
 
-        <div class="row" style="margin-top:12px">
-          <button id="registerBtn" class="btn">Demander la création</button>
-        </div>
-        <div id="registerMsg" class="msg small"> </div>
-      </article>
+          <label for="regPassword">Mot de passe</label>
+          <!-- IMPORTANT : name="password" -->
+          <input id="regPassword" name="password" type="password" required minlength="8" placeholder="********" />
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn-primary" type="submit">Demander la création</button>
+          </div>
+          <p class="help">Un e-mail de confirmation est envoyé. Un administrateur doit valider votre compte avant la première connexion.</p>
+          <div id="regMsg" class="msg" style="display:none"></div>
+        </form>
+      </section>
     </div>
+
+    <p class="footer">© 2025 École Ohr Joseph — <a class="link" href="/admin.html">Espace Administration</a></p>
   </main>
 
-  <footer>
-    <p>© 2025 École Ohr Joseph — <a class="link" href="/admin.html">Espace Administration</a></p>
-  </footer>
-<script type="module">
-  // Endpoints (garde-les si tes routes sont identiques)
-  const LOGIN_URL    = '/auth/login';
-  const REGISTER_URL = '/auth/register';
+  <!-- Section admin légère pour tester l'accès -->
+  <section class="wrap" id="admin" style="display:none">
+    <div class="card">
+      <h2>Administration rapide (validation des utilisateurs)</h2>
+      <form id="adminGate" class="row">
+        <input id="adminCode" type="password" placeholder="Code administrateur" required />
+        <button class="btn-primary" type="submit">Entrer</button>
+      </form>
+      <div id="adminMsg" class="msg" style="display:none"></div>
+      <div id="adminPanel" style="display:none">
+        <p class="help">Comptes en attente :</p>
+        <ul id="pendingList"></ul>
+      </div>
+    </div>
+  </section>
 
-  function show(el, msg, ok=false){
-    el.textContent = msg;
-    el.className = 'msg small ' + (ok ? 'ok' : 'err');
-  }
-  async function postJSON(url, data){
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(data)
-    });
-    let json = null;
-    try { json = await res.json(); } catch(e){}
-    return { ok: res.ok, status: res.status, data: json };
-  }
-
-  // --- Connexion ---
-  const loginBtn = document.getElementById('loginBtn');
-  const loginMsg = document.getElementById('loginMsg');
-  loginBtn.addEventListener('click', async () => {
-    const email = document.getElementById('loginEmail').value.trim();
-    const password  = document.getElementById('loginPass').value; // <-- password
-    if(!email || !password){ show(loginMsg,'Veuillez remplir les champs.'); return; }
-    loginBtn.disabled = true; show(loginMsg,'Connexion en cours…');
-
-    // IMPORTANT: le serveur attend { email, password }
-    const res = await postJSON(LOGIN_URL, { email, password });
-    loginBtn.disabled = false;
-
-    if(res.ok){
-      show(loginMsg, res?.data?.message || 'Connecté !', true);
-      setTimeout(()=> location.href='/admin.html', 600);
-    } else {
-      const msg = res?.data?.error || res?.data?.message || `Erreur ${res.status}`;
-      show(loginMsg, msg);
-    }
-  });
-
-  // --- Création de compte ---
-  const registerBtn = document.getElementById('registerBtn');
-  const registerMsg = document.getElementById('registerMsg');
-  registerBtn.addEventListener('click', async () => {
-    const payload = {
-      name:    document.getElementById('rName').value.trim(),
-      surname: document.getElementById('rSurname').value.trim(),
-      role:    document.getElementById('rRole').value,
-      classe:  document.getElementById('rClasse').value.trim(),
-      email:   document.getElementById('rEmail').value.trim(),
-      password:document.getElementById('rPass').value        // <-- password
-    };
-    if(!payload.name || !payload.surname || !payload.email || !payload.password){
-      show(registerMsg,'Veuillez compléter tous les champs requis.'); return;
-    }
-    registerBtn.disabled = true; show(registerMsg,'Envoi de la demande…');
-
-    // IMPORTANT: le serveur attend { name, surname, role, classe, email, password }
-    const res = await postJSON(REGISTER_URL, payload);
-    registerBtn.disabled = false;
-
-    if(res.ok){
-      show(registerMsg, res?.data?.message || 'Demande envoyée. Vérifiez vos e-mails.', true);
-    } else {
-      const msg = res?.data?.error || res?.data?.message || `Erreur ${res.status}`;
-      show(registerMsg, msg);
-    }
-  });
-
-  // Accessibilité: Enter pour valider
-  for (const id of ['loginEmail','loginPass']) {
-    document.getElementById(id).addEventListener('keydown', (e)=>{
-      if(e.key==='Enter') loginBtn.click();
-    });
-  }
-  for (const id of ['rName','rSurname','rClasse','rEmail','rPass']) {
-    const el = document.getElementById(id);
-    el && el.addEventListener('keydown',(e)=>{ if(e.key==='Enter') registerBtn.click(); });
-  }
-</script>
-
+  <script type="module" src="/assets/app.js"></script>
 </body>
 </html>
